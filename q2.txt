@@ -1,0 +1,4 @@
+[S, Fs] = audioread('sound.wav');
+delayT = 0.5 %sec;
+delayFs = delayT * Fs;
+dlyS = cat(1, S,zeros(delayFs,1)) +  cat(1, zeros(delayFs,1), S); 
