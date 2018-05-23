@@ -41,6 +41,11 @@ eco2((1:L) + n1) = eco2((1:L) + n1) + a1 * S;
 eco2((1:L) + n2) = eco2((1:L) + n2) + a2 * S; 
 
 eco2ply = audioplayer(eco2, Fs);
+%% removing new eco
+NUM = 1;
+DEN = [1 zeros(1,n1-1) a1 zeros(1, n2 - n1 - 1) a2];
+eco2free= filter(NUM, DEN, eco2);
+eco2freeply = audioplayer(eco2free, Fs);
 
 
 
