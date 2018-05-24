@@ -1,5 +1,22 @@
+%%
 [S, Fs] = audioread('sound.wav');
-delayT = 0.5 %sec;
-delayFs = delayT * Fs;
-dlyS = cat(1, S,zeros(delayFs,1)) +  cat(1, zeros(delayFs,1), S); 
-%% 
+%% new eco
+n1 = 0.3 * Fs;
+n2 = 0.6 * Fs;
+a1 = 0.5;
+a2 = 0.25;
+L = numel(S);
+
+eco2 =cat(1, S , zeros(n2, 1));
+eco2((1:L) + n1) = eco2((1:L) + n1) + a1 * S; 
+eco2((1:L) + n2) = eco2((1:L) + n2) + a2 * S; 
+
+eco2ply = audioplayer(eco2, Fs);
+%% removing new eco
+NUM = 1;
+DEN = [1 zeros(1,n1-1) a1 zeros(1, n2 - n1 - 1) a2];
+eco2free= filter(NUM, DEN, eco2);
+eco2freeply = audioplayer(eco2free, Fs);
+%%
+
+plot(eco2free(1:L)- S);

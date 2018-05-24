@@ -63,6 +63,9 @@ NUM = 1;
 DEN = [1 zeros(1,n1-1) a1 zeros(1, n2 - n1 - 1) a2];
 eco2free= filter(NUM, DEN, eco2);
 eco2freeply = audioplayer(eco2free, Fs);
+%%
+
+plot(eco2free(1:L)- S);
 
 
 
