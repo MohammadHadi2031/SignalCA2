@@ -32,10 +32,9 @@ audiowrite('eco_voice.wav', dlyS, Fs);
     %play(ply_noEcho2);
     diffArray = S - noEchoM2(1:numel(S));
     plot(diffArray);
-    %accArr=(diffArray./S);
-    %meanAcc = mean(abs(accArr(isinf(accArr)==0)),'omitnan');
-    %stdofnoEcho = std(diffArray(isinf(diffArray)==0),'omitnan');
-    %title(sprintf('std is %.4f', stdofnoEcho));
+    accArr=(diffArray./S);
+    meanAcc = mean(abs(accArr(isinf(accArr)==0)),'omitnan');
+    title(sprintf('std is %.2f', 100*(1-meanAcc)));
     %%
 %% removing eco with Z transform
 NUM = 1;
