@@ -10,14 +10,13 @@ f = Fs *(0:L/2-1)/L; %- Fs/2;
 plot(f, Y(1:L/2));
 text(f(SortYind(1)), SortY(1)/2,sprintf('\\leftarrow fs = %d Hz',f(SortYind(1))));
 %text(f(SortYind(2)), SortY(2)*2/3,sprintf('\\leftarrow fs = %d Hz',f(SortYind(2))));
-%-----------------------------%
 %% Jim(filter)
     SfreeNoise =filter(Q1_Filter, S);
     %% play and write
     player=audioplayer(SfreeNoise,Fs);
     play(player);
     audiowrite('noise_free.wav', SfreeNoise, Fs);
-    %-----------------------------%
+    %-----------------------------
 %% mag and angle of filter
 load('Q1_FilterNum.mat')
 freqz(Q1_FilterNum);
@@ -36,22 +35,18 @@ subplot(2,1,2);
 plot(SfreeFilterd);
 title('Filterd Sound Free Noise');
 %% fft of freeNoise and filtered freeNoise
-Yf = abs(fft(SfreeNoise))/L;
-YfLowpass = abs(fft(SfreeFilterd))/L;
+Yf = abs(fftshift(fft(SfreeNoise)))/L;
+YfLowpass = abs(fftshift(fft(SfreeFilterd)))/L;
 figure('name','fft of freeNoise and filtered freeNoise');
-f = (0:L/2-1)*Fs/L;
-f = f/1000; %1KHz
+f = (0:L-1)*Fs/L;
 subplot(2,1,1);
-plot(f, Yf(1:L/2));
+plot(f, Yf);
 title('fft of Sound Free Noise');
-xlabel('Frequency(KHz)');
 subplot(2,1,2);
-plot(f, YfLowpass(1:L/2));
+plot(f, YfLowpass);
 title('fft of Filterd Sound Free Noise');
-xlabel('Frequency(KHz)');
 %% mag and angle of lowpass filter
-load('Q1_LowpassFilterNUM.mat');
-freqz(Q1_LowpassFilterNUM);
+freqz(Q1_LowpassNum);
 
 
 
