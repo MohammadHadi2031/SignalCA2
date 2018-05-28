@@ -43,42 +43,36 @@ audiowrite('eco_voice.wav', dlyS, Fs);
     %title(sprintf('std is %.4f', stdofnoEcho));
     %%
 %% removing eco with Z transform
-    %% initialize NUM and DEN 
+    % initialize NUM and DEN 
     NUM = 1;
     DEN = [1 zeros(1,n1-1) u];
-    %% play and filter
-    ecofree= filter(NUM, DEN, dlyS);
-    ecofreeply=audioplayer(ecofree, Fs);
-    %% frequency response
-    freqz(NUM, DEN);
-    %% 
-    sys1 = filt(NUM, DEN, 1/Fs);
-    %% plot diff 
-    plot(ecofree(1:numel(S)) - S);
+    %% play and fi
+ecofree= filter(NUM, DEN, dlyS);
+ecofreeply=audioplayer(ecofree, Fs);
+%% frequency response
+freqz(DEN, NUM);
+%% plot diff 
+plot(ecofree(1:numel(S)) - S);
 %% new eco
-    %% initialize vars and add echo
-    n1 = 0.3 * Fs;
-    n2 = 0.6 * Fs;
-    a1 = 0.5;
-    a2 = 0.25;
-    L = numel(S);
+n1 = 0.3 * Fs;
+n2 = 0.6 * Fs;
+a1 = 0.5;
+a2 = 0.25;
+L = numel(S);
 
-    eco2 =cat(1, S , zeros(n2, 1));
-    eco2((1:L) + n1) = eco2((1:L) + n1) + a1 * S; 
-    eco2((1:L) + n2) = eco2((1:L) + n2) + a2 * S; 
+eco2 =cat(1, S , zeros(n2, 1));
+eco2((1:L) + n1) = eco2((1:L) + n1) + a1 * S; 
+eco2((1:L) + n2) = eco2((1:L) + n2) + a2 * S; 
 
-    eco2ply = audioplayer(eco2, Fs);
-    %% removing new eco
-    NUM2 = 1;
-    DEN2 = [1 zeros(1,n1-1) a1 zeros(1, n2 - n1 - 1) a2];
-    eco2free= filter(NUM2, DEN2, eco2);
-    eco2freeply = audioplayer(eco2free, Fs);
-    %% 
-    sys2 = filt(NUM2, DEN2, 1/Fs);
-    %% frequency response
-    freqz(NUM2, DEN2);
-    %% plot diff
-    plot(eco2free(1:L)- S);
+eco2ply = audioplayer(eco2, Fs);
+%% removing new eco
+NUM = 1;
+DEN = [1 zeros(1,n1-1) a1 zeros(1, n2 - n1 - 1) a2];
+eco2free= filter(NUM, DEN, eco2);
+eco2freeply = audioplayer(eco2free, Fs);
+%%
+
+plot(eco2free(1:L)- S);
 
 
 
