@@ -30,12 +30,7 @@ obw(sampleS, 4000);
 reSplayer = audioplayer(reS, Fs);
 play(reSplayer);
 %% compare two signal
-subplot(2, 1, 1);
-plot(S);
-title('Original Signal');
-subplot(2, 1, 2);
-plot(reS);
-title('Reconstructed Signal');
+
 %% compare by fft
 f = Fs*(0:L/2)/L;
 Y = fft(S); 
